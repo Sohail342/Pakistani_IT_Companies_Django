@@ -1,0 +1,135 @@
+from django.core.management.base import BaseCommand
+from core.models import Company, Client
+
+class Command(BaseCommand):
+    help = 'Insert company data into Company and Client models'
+
+    def handle(self, *args, **kwargs):
+        company_data = [
+            (0, 'IQVIS', 3.5, 'Pakistan', 'CloudOn,Dropbox,Audi,USAID'),
+            (1, 'Techliance', 4.8, 'Lahore,Pakistan', 'Travmeet,NYF,Guilder'),
+            (2, 'AlgoRepublic', 4.9, 'Lahore,Pakistan', 'YapJobs,46 Labs,Wiser launcher'),
+            (3, 'Whinstone', 4.5, 'Islamabad,Pakistan', 'Berlitz,InfoBIP,Voting Fans,Positive Impact'),
+            (4, 'OnDemandStartups', 5, 'Rawalpindi,Pakistan', 'MyGroser,Paddle,Boon4,Fiksa.no'),
+            (5, 'ESIPICK', 5, 'Lahore,Pakistan', 'BridgeStone,Saveondev,PriceCloud'),
+            (6, 'Shopdev', 5, 'Lahore,Pakistan', 'Emaar Group,Staples,Bayer,The Dubai Mall'),
+            (7, 'Whizpool', 5, 'Islamabad,Pakistan', 'Vevue,Buzzador,Partscheck'),
+            (8, 'HYFATech', 5, 'Lahore,Pakistan', 'CARRMate,Jom'),
+            (9, 'System Plus', 4.9, 'Lahore,Pakistan', 'Instashowing'),
+            (10, 'Centangle Interactive', 4.8, 'Islamabad,Pakistan', 'Hush,SGAFP,Footysquare'),
+            (11, 'The Right Software pvt Ltd.', 5, 'Islamabad,Pakistan', 'FITsociety,Disxt,Embodied Wisdom Publishing,Pervorm'),
+            (12, 'Saremco Tech', 4.6, 'Lahore,Pakistan', 'City Plug,Last Target,Food Gem'),
+            (13, 'bCubex', 5, 'Karachi,Pakistan', 'Kamoota,Column,Homepie,Anakeed Mart'),
+            (14, 'InvoZone', 4.8, 'Lahore,Pakistan', 'Catalyic Security,Yamaha,LoadStop'),
+            (15, 'TekHqs ( Tek HeadQuarters )', 5, 'Lahore,Pakistan', 'Penorama,Travelsmeet,Food Karma'),
+            (16, 'Phaedra Solutions', 5, 'Lahore,Pakistan', 'Samba Bank,Kuickpay,Bherd'),
+            (17, 'Brainiac Studio', 4.5, 'Karachi,Pakistan', 'ZingoHub,UBlazd,MyNextDress,Kisestu'),
+            (18, 'Bazingo Inc. Pte. Ltd.', 5, 'Lahore,Pakistan', 'Packagio,More & More,Behance'),
+            (19, 'Allomate Solutions', 4.5, 'Lahore,Pakistan', 'Sears,AAA Connect,Panel Armor,Ionic Trends'),
+            (20, 'PNC Solutions', 4.7, 'Pakistan', 'Skinnygirl,Plectrum Accelerate,AppIgniter'),
+            (21, 'InfiniOne', 5, 'Lahore,Pakistan', 'ClearCube,A Mark for Peace,Streams Ministries,Connectwise'),
+            (22, 'UmerQaiser.com', 5, 'Lahore,Pakistan', 'Allsorter,KA Services UK LTD,Zeeko'),
+            (23, 'Khired Networks', 4.6, 'Lahore,Pakistan', 'Arro Money,Orgoo,Cyber Ventures'),
+            (24, 'Iyrix Tech', 5, 'Sialkot,Pakistan', 'Cisco,Intel,Google,Sanofi'),
+            (25, 'DPL', 4.6, 'Islamabad,Pakistan', 'HBMeU,ESMA,Ministry of Education, UAE'),
+            (26, 'Inquisitives', 5, 'Karachi,Pakistan', 'Coca-Cola,Paladin,Rang Rasiya,Safe City Lahore'),
+            (27, 'Neusol LLC', 3.8, 'Karachi,Pakistan', 'Limint,The Wearhouse,Chenone'),
+            (30, 'Softpers Interactive', 5, 'Lahore,Pakistan', 'LabPortal,Pupum,CalendarClouds'),
+            (31, 'Stackworx.co', 5, 'Lahore,Pakistan', 'Prodeus,Johnstown Garden Centre,Megastores,Kimberly-Clark'),
+            (32, 'ArhamSoft', 4.4, 'Lahore,Pakistan', 'Incartoo,MiRyde,CallonDoc,Topsun Bazar'),
+            (33, 'Sitex Private Limited', 5, 'Karachi,Pakistan', 'QLTS School LLC,OptiLingo LLC,Chief Detective,The F.A.M.'),
+            (34, 'CarbonTeq', 5, 'Lahore,Pakistan', 'MyLiveDoctors,My Florida Green,TheDocApp'),
+            (35, 'Xeven Solutions', 4.8, 'Lahore,Pakistan', 'Blazon Infotech,FranySolutions,3Dfy.me Limited'),
+            (36, 'OptimaGeeks', 5, 'Lahore,Pakistan', 'Cuzhub,MediaCafe'),
+            (37, 'Tecticx', 5, 'Karachi,Pakistan', 'Global Technology and Innovation,Redoya'),
+            (38, 'ZEREFLAB', 5, 'Lahore,Pakistan', 'British Business Group,Marya Leadership Academy,The Captain\'s Club'),
+            (39, 'Wisdom Information Technology Solutions', 4.8, 'Lahore,Pakistan', 'Coupons at Checkout,Dropified,AliExtractor,ASINSPECTOR'),
+            (40, 'Kikbits', 5, 'Islamabad,Pakistan', 'Divine Technologies,Netexem,ESI Consulting Group,Urtasker'),
+            (41, 'Bitsclan Solutions', 4.8, 'Lahore,Pakistan', 'Marketit.ca'),
+            (42, 'BearPlex', 5, 'Lahore,Pakistan', 'Ed-Dream Global'),
+            (43, 'WAMPDO', 5, 'Faisalabad,Pakistan', 'ReportBrain,Parcelist Predict Data, Inc.'),
+            (44, 'Datum Brain', 5, 'Lahore,Pakistan', 'Nissan,Bridgestone,Infiniti,Mott McDonalds'),
+            (45, 'Verge Systems', 5, 'Hyderabad,Pakistan', 'Dogs on Deployment,Loebig Ink,American Personal & Private Chef Association'),
+            (46, 'Hashe Computer Solutions (Pvt) Ltd.', 5, 'Lahore,Pakistan', 'Pioneer Automotives,Shaffi Group,Key Sports,Army Warfare'),
+            (47, 'Solvech', 4.5, 'Lahore,Pakistan', 'La Artsy Jewelry Store,VistaChat,Logic Vapes'),
+            (48, 'SkyQuest', 5, 'Karachi,Pakistan', 'Stable,Storichain,Medium'),
+            (49, 'RNS Solutions', 5, 'Rawalpindi,Pakistan', 'Al-Tafseer Solutions'),
+            (50, 'TDX Labs', 5, 'KARACHI,Pakistan', 'Heyremote,Hoorayy'),
+            (51, 'Denovers', 5, 'Karachi,Pakistan', 'Elite Dental Laboratory,Sam99p,Technoman PVT LTD,Furnikaar Mariajee'),
+            (52, 'Glowlogix Pvt. Ltd', 5, 'Gujrat,Pakistan', 'JP Associates,Ghazee Offal,Olie'),
+            (53, 'eDesk Solutions', 5, 'Karachi,Pakistan', 'Software companies receptive to outsourcing based in USA & Western Europe,Retail Companies,Digital Marketing Agencies'),
+            (54, 'Codener', 4.8, 'Karachi,Pakistan', 'Fitzgerald Home Furnishings,Butterfly Pakistan,Luxury Adventures'),
+            (55, 'Zablesoft', 5, 'Lahore,Pakistan', 'Dial International,workonmyonlineclasses,The Fox Media'),
+            (56, 'WeUno', 5, 'Islamabad,Pakistan', 'Eyecandy Creative Services,CureCompanion,Healthgrades'),
+            (57, 'MetaDesign Solutions', 5, 'Lahore,Pakistan', 'Tramundi,SmarteCarte,PhoneDoctors,MAJIN Network'),
+            (58, 'Trango Tech', 4.5, 'Karachi,Pakistan', 'Anderson,Segovia,POLR'),
+            (59, 'iCrowd Task Pvt. Ltd.', 5, 'Islamabad,Pakistan', 'Dribble Media,Heuristic Consulting,The Hoth,Papercut Interactive'),
+            (60, 'Conovo Technologies', 5, 'Lahore,Pakistan', 'Bluestreak Math,Pixel Dubai,Detail 360'),
+            (61, 'Coding Pro', 5, 'Lahore,Pakistan', 'GlamourByMA,Bahu Chem,Royal Leather Industries Limited'),
+            (62, 'Systechlogic', 4.6, 'Karachi,Pakistan', '67 Estate,Microtics Management,Unze London,Silicon Valley'),
+            (63, 'FastTech Media', 5, 'Bahawalpur,Pakistan', 'SoftVision College of IT,The Global Educators,The Global Intelligentsia'),
+            (64, '#Maker Solutions', 4.8, 'Lahore,Pakistan', 'Aval Group,Kevco ServiceBull,Workzone'),
+            (65, 'Creative Ideator', 4.5, 'Karachi,Pakistan', 'Mouawad,United Gulf Consult,Silos Intelligent Solutions,Point Solutions'),
+            (66, 'Webtrica', 5, 'Karachi,Pakistan', 'Zolustech'),
+            (67, 'Sudofy', 5, 'Karachi,Pakistan', 'Este World,Tinker,Shop Skin,OSL Labs'),
+            (68, 'Next Generation Business Solutions', 4, 'Islamabad,Pakistan', 'Gold rock,UKIA BOOKSTORE,Naseba'),
+            (69, 'Coders Region', 5, 'Lahore,Pakistan', 'ELMS Service,Get Prodigy,Digbihealth'),
+            (70, 'Creative Sprout Media', 5, 'Lahore,Pakistan', 'KFC,Pakistan State Oil,Candyland'),
+            (71, 'ardentbay', 5, 'Karachi,Pakistan', 'Data Firm'),
+            (72, 'Pseudosquare', 4.8, 'Lahore,Pakistan', 'Krossing,Sejam,Easy Insurance'),
+            (73, 'Waleed Ahmed - Digital Marketing Expert in Pakistan', 4.3, 'Karachi,Pakistan', 'Liberty Mutual,MIT Technology Review,Remax/INTEGR,Gameview Systems'),
+            (74, 'VENRUP', 4, 'Lahore,Pakistan', 'Gameacademy.com,SBB Research Group,Mofascialpaininstitute.com,appypocket'),
+            (75, 'UshAR', 4, 'Islamabad,Pakistan', 'Nexis Financials,Preclarity Inc.,Libertas Group,SMS A Joke'),
+            (76, 'NorthBay', 5, 'Lahore,Pakistan', 'South City Hospital,Liberty Books,JostHani,Ignite Wardrobe'),
+            (77, 'Intelligent Solutions', 4, 'Islamabad,Pakistan', 'Recway Sweden,My Travel Library,The Eifer Institute'),
+            (78, 'Granjur Technologies', 5, 'Lahore,Pakistan', 'Advance Net Labs,Kustomer,Drive Mouse,Trucker\'s Digest'),
+            (79, 'Arete Pvt. Ltd', 5, 'Islamabad,Pakistan', 'Foggvape,Nivetreviews,Autodesk,CompuSOFT Training Center'),
+            (80, 'Zera Creative', 5, 'Karachi,Pakistan', 'SweepWidget,Datosfrescos,Giveaway Play,WinASweepstakes'),
+            (81, 'Uforia Infotech', 5, 'Islamabad,Pakistan', 'Best Of The Leaf'),
+            (89, '10Pearls', 4.9, 'Karachi,Pakistan', 'Paypal,Coca-Cola,IRS,AARP'),
+            (90, 'GoodCore Software', 5, 'Karachi,Pakistan', 'Printed Music Licensing,Weight Loss Resources,GC Business Finance,XTracked Deliveries'),
+            (91, 'Arbisoft', 4.9, 'Lahore,Pakistan', 'Indeed,Amazon,Microsoft,McDonald’s'),
+            (92, 'VentureDive Pvt. Ltd.', 4.7, 'Lahore,Pakistan', 'Careem,Google,Unilever'),
+            (93, 'Techverx', 5, 'Lahore,Pakistan', 'Kickfurther,MentorCity,DrivingLoyalty'),
+            (94, 'RIKSOF', 4.7, 'Karachi,Pakistan', 'Total Parco,Lebara,TCS,USAID'),
+            (95, 'Aurora Solutions', 5, 'Islamabad,Pakistan', 'Stakater,QbTech,jBilling,Pliro'),
+            (96, 'Rareiio', 5, 'Lahore,Pakistan', 'Heineken,Club Soda,Drool'),
+            (97, 'Codup.co', 4.9, 'Karachi,Pakistan', 'Freshdesk (Freshworks),StreamVision,AireBeam'),
+            (98, 'Dev Centre House', 4.9, 'Islamabad,Pakistan', 'Ei Learning,BMW,Kurdshopping,Mophie'),
+            (99, 'Code District', 4.7, 'Lahore,Pakistan', 'NFL,Verizon,Barclays,Intelligence Bank'),
+            (100, 'Square63', 4.8, 'Lahore,Pakistan', 'SkilledUp.com,ContentTools.co,GetGuidance.com,Master-painter.com'),
+            (101, 'CodeNinja Inc.', 5, 'Lahore,Pakistan', 'NETSOL Technologies Inc.,Kuwait Cricket,eSullivans,FBConnect'),
+            (102, 'Technosoft Solutions', 5, 'Lahore,Pakistan', 'Zillion,Health Touch LTD,JFC & Associates'),
+            (103, 'Cubix', 4.7, 'Karachi,Pakistan', 'Glimmer,Cartel Poker,On Break,Wish Pix'),
+            (104, 'Focusteck', 4.6, 'Lahore,Pakistan', 'Vcandidates,Konmari,Cape'),
+            (105, 'Novatore Solutions', 5, 'Lahore,Pakistan', 'AT&T,Zencribs,Cloudspot,Dashraod'),
+            (106, 'TechCreatix', 5, 'Lahore,Pakistan', 'Instamoji,Invisible Social,Bark’n’Borrow'),
+            (107, 'TBox Solutionz SMC Pvt Ltd', 5, 'Lahore,Pakistan', 'eMushrif,eCare 21,Fotki Inc,GetBetterBack'),
+            (108, 'HTML Pro', 4.8, 'Lahore,Pakistan', 'Bark Buildings,Datasmith,Zoomdazzle,Solid Systems'),
+            (109, 'Cygnis Media', 4.3, 'Pakistan', 'Cocktails & Dreams,Voicemail Depot,Cat Burglar,DocLock'),
+            (110, 'FRAG', 4.8, 'Lahore,Pakistan', 'DeNA,Aeria Games,Ford'),
+            (111, 'Digital Dividend', 4.7, 'Karachi,Pakistan', 'Assurety,Cata Black Car App,Menyoo'),
+            (112, 'Mob Inspire', 4.2, 'Islamabad,Pakistan', 'RYDR,Trail Connect,Allo Services,Mob Armour'),
+            (113, 'Ropstam BPO Inc.', 5, 'Rawalpindi,Pakistan', 'Walmart,Rogers,Bell,Globe&Mail'),
+            (114, 'Rolustech', 5, 'Lahore,Pakistan', 'Sarsen Education,AgentDesign,Sentronex'),
+            (115, 'Esketchers', 4.8, 'Lahore,Pakistan', 'YM&U,Anthems,Print Network,QIH'),
+            (116, 'Unique Software Development', 5, 'Karachi,Pakistan', 'AMI Monitoring, Inc.,IT Strategy Group, Inc.,Target Source Media, LLC'),
+            (117, 'Liquid Technologies', 4.9, 'Karachi,Pakistan', 'Microsoft'),
+            (118, 'WPExperts', 4.9, 'Karachi,Pakistan', 'Microsoft')
+        ]
+
+        # Create companies
+        companies = []
+        for company in company_data:
+            companies.append(Company(id=company[0], company_name=company[1], rating=company[2], location=company[3]))
+        Company.objects.bulk_create(companies)
+
+        # Create clients
+        clients = []
+        for company in company_data:
+            company_instance = Company.objects.get(id=company[0])
+            for client in company[4].split(','):
+                clients.append(Client(company=company_instance, company_clients=client))
+        Client.objects.bulk_create(clients)
+
+        self.stdout.write(self.style.SUCCESS('Successfully inserted company and client data'))

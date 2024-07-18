@@ -1,0 +1,165 @@
+{% extends 'navbar.html' %}
+
+{% load static %}
+{% block content %}
+<div class="container-fluid py-4">
+  <div class="row">
+    {% for key, value in query_set.items %}
+    <div class="col-xl-3 col-sm-6 mb-xl-0 py-3">
+      <div class="card">
+        <div class="card-header p-3 pt-2">
+          <div class="icon icon-lg icon-shape bg-gradient-{{value.color}} shadow-{{value.color}} text-center border-radius-xl mt-n4 position-absolute">
+            <i class="material-icons opacity-10">{{ value.icon }}</i>
+          </div>
+          <div class="text-end pt-1">
+            <p class="text-sm mb-0 text-capitalize">Total Companies</p>
+            <h4 class="mb-0">{{ value.total_companies }}</h4>
+          </div>
+        </div>
+        <hr class="dark horizontal my-0">
+        <div class="card-footer p-3">
+          <p class="mb-0"><span class="text-success text-sm font-weight-bolder">2023 </span>{{ value.location }}</p>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>  
+<!-- Charts -->
+<div class="row mt-4">
+  <div class="col-lg-6 col-md-6 mb-4">
+    <div class="card z-index-2">
+      <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
+        <div class="py-3 pe-1">
+          <div class="chart">
+            <canvas id="myChart" class="chart-canvas" height="300"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <h6 class="mb-0">Companies Comparison</h6>
+        <p class="text-sm">Software Companies in Pakistan in 2023</p>
+        <hr class="dark horizontal">
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-6 col-md-6 mb-4">
+    <div class="card z-index-2">
+      <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
+        <div class="py-3 pe-1">
+          <div class="chart">
+            <canvas id="mybar" class="chart-canvas" height="300"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <h6 class="mb-0">Most Rated Companies (5/5) </h6>
+        <p class="text-sm">Location Wise</p>
+        <hr class="dark horizontal">
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="col-12">
+  <div class="card my-4">
+    <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+      <div class="bg-gradient-dark shadow-dark border-radius-lg pt-4 pb-3">
+        <h6 class="text-white text-capitalize ps-3">Clients of Companies</h6>
+      </div>
+    </div>
+    <div class="card-body px-0 pb-2">
+      <div class="table-responsive p-0">
+        <table class="table align-items-center mb-0">
+          <thead>
+            <tr>
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Company</th>
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">location</th>
+              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Client
+              </th>
+              <th class="text-secondary opacity-7"></th>
+            </tr>
+          </thead>
+          {% for company in clients %}
+          <tbody>
+            <tr>
+              <td>
+                <div class="d-flex px-2 py-1">
+                  <div>
+                    <img src="{% static 'assets/img/small-logos/logo-asana.svg' %}"
+                      class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
+                  </div>
+                  <div class="d-flex flex-column justify-content-center">
+                    <h6 class="mb-0 text-sm">{{company.0}}</h6>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <p class="text-xs font-weight-bold mb-0">{{company.1}}</p>
+              </td>
+              <td class="align-middle text-center">
+                <span class="text-secondary text-xs font-weight-bold">{{company.2}}</span>
+              </td>
+            </tr>
+          </tbody>
+          {% endfor %}
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <script>
+    const chartData = JSON.parse('{{ chart_data|escapejs }}');
+
+    //doughnut chart
+    const ctx = document.getElementById('myChart');
+      new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: chartData.labels,
+          datasets: [{
+            label: '# of Companies',
+            data: chartData.doughnut_data,
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+
+      // Bar Chart
+      const ctx1 = document.getElementById('mybar');
+    
+      new Chart(ctx1, {
+        type: 'bar',
+        data: {
+          labels: chartData.labels,
+          datasets: [{
+            label: '5/5 ratings of',
+            data: chartData.bar_data,
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    </script>
+    
+
+
+{% endblock content %}
