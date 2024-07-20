@@ -2,8 +2,10 @@ from django.shortcuts import render
 from .models import Company
 import json
 from django.db import connection
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
+@login_required()
 def dashboard(request):
     
     total_companies = Company.objects.count()
@@ -53,7 +55,7 @@ def dashboard(request):
     
     return render(request, 'dashboard.html', context)
     
-    
+@login_required()
 def tables(request):
     # Raw Sql Queries
     top_rated = Company.objects.raw('''

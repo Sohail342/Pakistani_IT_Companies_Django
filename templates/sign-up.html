@@ -1,7 +1,7 @@
 {% extends 'navbar.html' %}
 
 {% block content %}
-<main class="main-content  mt-0">
+<main class="main-content mt-0">
   <div class="page-header align-items-start min-vh-100"
     style="background-image: url('https://images.unsplash.com/photo-1497294815431-9365093b7331?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1950&q=80');">
     <span class="mask bg-gradient-dark opacity-6"></span>
@@ -11,7 +11,7 @@
           <div class="card z-index-0 fadeIn3 fadeInBottom">
             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
               <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1">
-                <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">Sign in</h4>
+                <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">Sign Up</h4>
                 <div class="row mt-3">
                   <div class="col-2 text-center ms-auto">
                     <a class="btn btn-link px-3" href="javascript:;">
@@ -31,39 +31,48 @@
                 </div>
               </div>
             </div>
-            <div class="card-body">
-              <form role="form">
-                <div class="input-group input-group-outline mb-3">
-                  <label class="form-label">Name</label>
-                  <input type="text" class="form-control">
+            <div class="card-body ">
+              <form role="form" method="POST" action="{% url 'Signup' %}">
+                {% csrf_token %}
+                <div class="form-floating mb-3">
+                  <input name="username" type="text" class="form-control" id="floatingUsername" placeholder="Your Username" value="{{ form.username.value|default_if_none:'' }}">
+                  <label for="floatingUsername">Username</label>
+                  {% if form.username.errors %}
+                  <div class="text-danger mb-2 text-sm mx-auto">{{ form.username.errors }}</div>
+                  {% endif %}
                 </div>
-                <div class="input-group input-group-outline mb-3">
-                  <label class="form-label">Email</label>
-                  <input type="email" class="form-control">
+                <div class="form-floating mb-3">
+                  <input name="email" type="email" class="form-control" id="floatingEmail" placeholder="name@example.com" value="{{ form.email.value|default_if_none:'' }}">
+                  <label for="floatingEmail">Email</label>
+                  {% if form.email.errors %}
+                  <div class="text-danger mb-2 text-sm mx-auto">{{ form.email.errors }}</div>
+                  {% endif %}
                 </div>
-                <div class="input-group input-group-outline mb-3">
-                  <label class="form-label">Password</label>
-                  <input type="password" class="form-control">
+                <div class="form-floating mb-3">
+                  <input name="password1" type="password" class="form-control" id="floatingPassword1" placeholder="Password">
+                  <label for="floatingPassword1">Password</label>
+                  {% if form.password1.errors %}
+                  <div class="text-danger mb-2 text-sm mx-auto">{{ form.password1.errors }}</div>
+                  {% endif %}
                 </div>
-                <div class="form-check form-check-info text-start ps-0">
-                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
-                  <label class="form-check-label" for="flexCheckDefault">
-                    I agree the <a href="javascript:;" class="text-dark font-weight-bolder">Terms and Conditions</a>
-                  </label>
+                <div class="form-floating mb-3">
+                  <input name="password2" type="password" class="form-control" id="floatingPassword2" placeholder="Confirm Password">
+                  <label for="floatingPassword2">Confirm Password</label>
+                  {% if form.password2.errors %}
+                  <div class="text-danger mb-2 text-sm mx-auto">{{ form.password2.errors }}</div>
+                  {% endif %}
                 </div>
                 <div class="text-center">
-                  <button type="button" class="btn btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0">Sign Up</button>
+                  <button type="submit" class="btn btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0">Sign Up</button>
                 </div>
               </form>
             </div>
-
             <div class="card-footer text-center pt-0 px-lg-2 px-1">
               <p class="mb-2 text-sm mx-auto">
                 Already have an account?
                 <a href="{% url 'Login' %}" class="text-primary text-gradient font-weight-bold">Sign in</a>
               </p>
             </div>
-            
           </div>
         </div>
       </div>

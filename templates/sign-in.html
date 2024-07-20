@@ -32,21 +32,29 @@
               </div>
             </div>
             <div class="card-body">
-              <form role="form" class="text-start">
-                <div class="input-group input-group-outline my-3">
-                  <label class="form-label">Email</label>
-                  <input type="email" class="form-control">
+
+              {% if form.non_field_errors %}
+              <span class="text-danger mt-4 text-sm text-center">{{ form.non_field_errors.as_ul }}</span>
+              {% endif %}
+
+              <form method="POST" action="{% url 'Login' %}" class="text-start">
+                {% csrf_token %}
+                <div class="form-floating my-3">
+                  <input type="text" class="form-control" id="floatingUsername" placeholder="Your Username" name="username" value="{{ form.username.value|default_if_none:'' }}">
+                  <label for="floatingUsername mt-4 text-sm text-center">Username</label>
+                  {% if form.username.errors %}
+                    <span class="text-danger mt-4 text-sm text-center">{{ form.username.errors }}</span>
+                  {% endif %}
                 </div>
-                <div class="input-group input-group-outline mb-3">
-                  <label class="form-label">Password</label>
-                  <input type="password" class="form-control">
-                </div>
-                <div class="form-check form-switch d-flex align-items-center mb-3">
-                  <input class="form-check-input" type="checkbox" id="rememberMe" checked>
-                  <label class="form-check-label mb-0 ms-3" for="rememberMe">Remember me</label>
+                <div class="form-floating mb-3">
+                  <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password">
+                  <label for="floatingPassword">Password</label>
+                  {% if form.password.errors %}
+                    <span class="text-danger mt-4 text-sm text-center">{{ form.password.errors }}</span>
+                  {% endif %}
                 </div>
                 <div class="text-center">
-                  <button type="button" class="btn bg-gradient-primary w-100 my-4 mb-2">Sign in</button>
+                  <button type="submit" class="btn bg-gradient-primary w-100 my-4 mb-2">Sign in</button>
                 </div>
                 <p class="mt-4 text-sm text-center">
                   Don't have an account?
