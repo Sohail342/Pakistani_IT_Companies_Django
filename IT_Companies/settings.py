@@ -5,12 +5,22 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+import environ
+
+# Initialize our environment variables
+
+env = environ.Env()
+environ.Env.read_env()
+
+
+
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-ud)=@g)lup-7sz%-z@^9fl+y2t8th+9ty@ma_sv4e1+1dm0yq@'
+SECRET_KEY = env('SECURITY_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -70,17 +80,10 @@ WSGI_APPLICATION = 'IT_Companies.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-# import dj_database_url
-# DATABASES = {
-    
-#     'default': dj_database_url.parse('postgres://default:8hAZS9NQxrWJ@ep-wandering-glade-a1b84gg6.ap-southeast-1.aws.neon.tech:5432/verceldb?sslmode=require')
-# }
-
+import dj_database_url
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+    
+    'default': dj_database_url.parse(env('DATABASE_URL'))
 }
 
 
@@ -121,8 +124,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
-STATICFILES_DIRS = [
-os.path.join(BASE_DIR, 'static'),]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'),]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
