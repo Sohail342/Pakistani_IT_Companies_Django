@@ -70,10 +70,17 @@ WSGI_APPLICATION = 'IT_Companies.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-import dj_database_url
-DATABASES = {
+# import dj_database_url
+# DATABASES = {
     
-    'default': dj_database_url.parse('postgres://default:8hAZS9NQxrWJ@ep-wandering-glade-a1b84gg6.ap-southeast-1.aws.neon.tech:5432/verceldb?sslmode=require')
+#     'default': dj_database_url.parse('postgres://default:8hAZS9NQxrWJ@ep-wandering-glade-a1b84gg6.ap-southeast-1.aws.neon.tech:5432/verceldb?sslmode=require')
+# }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
 }
 
 
