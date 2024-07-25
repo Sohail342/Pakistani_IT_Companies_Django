@@ -11,3 +11,5 @@ urlpatterns = [
     path('software_companies/', include("core.urls")),
     
 ]
+
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)    
