@@ -13,10 +13,12 @@ This Django web application provides a dashboard for visualizing data about Paki
 
 ### Overview
 - Dashboard
+  
 ![Dashboard](static/assets/img/bars.JPG)
 An overview of software companies across various cities in Pakistan with visualizations and tables
 
 - Charts.js
+
 ![Charts](static/assets/img/charts.JPG)
 Displays distribution of companies across major cities and number of top-rated companies in each major city.
 ## Installation
