@@ -45,9 +45,9 @@ Displays distribution of companies across major cities and number of top-rated c
     python manage.py migrate
     ```
 5. **If you want to Insert my dataset of pakistani software Companies, run the command (optional) :**
-  ```bash
+    ```bash
     python manage.py insert_company_data  # User Created Command
-  ```
+    ```
 
 6. **Create a superuser:**
     ```bash
