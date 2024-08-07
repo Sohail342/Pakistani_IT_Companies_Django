@@ -1,4 +1,4 @@
-# [Live on Circumeo](7ap-reliable-pascal.circumeo-apps.net)
+# [Live on Circumeo](https://7ap-reliable-pascal.circumeo-apps.net/)
 # Pakistani Software Companies Dashboard
 
 This Django web application provides a dashboard for visualizing data about Pakistani software companies, including their clients, locations, and ratings. The application features user authentication (login, register, logout) and dynamic data visualization using a real-life dataset of Pakistani software companies.
