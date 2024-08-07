@@ -15,9 +15,9 @@ SECRET_KEY = os.environ.get('SECRET_KEY', '')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['https://uj8-loyal-heisenberg.circumeo-apps.net/']
+ALLOWED_HOSTS = ["7ap-reliable-pascal.circumeo-apps.net"]
 
 
 # Application definition
