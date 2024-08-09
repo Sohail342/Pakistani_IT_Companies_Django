@@ -1,4 +1,4 @@
-# [Live on Circumeo](https://lw8-intelligent-feynman.circumeo-apps.net/)
+# [Live](https://hy7-visionary-babbage.circumeo-apps.net/)
 # Pakistani Software Companies Dashboard
 
 This Django web application provides a dashboard for visualizing data about Pakistani software companies, including their clients, locations, and ratings. The application features user authentication (login, register, logout) and dynamic data visualization using a real-life dataset of Pakistani software companies.
